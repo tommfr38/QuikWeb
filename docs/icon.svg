@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1024" y2="1024" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#1A1733"/>
+      <stop offset="1" stop-color="#2B2768"/>
+    </linearGradient>
+    <linearGradient id="glyph" x1="160" y1="160" x2="820" y2="820" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#22D3EE"/>
+      <stop offset="1" stop-color="#8B5CF6"/>
+    </linearGradient>
+    <radialGradient id="sheen" cx="320" cy="260" r="520" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.10"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect x="0" y="0" width="1024" height="1024" rx="225" ry="225" fill="url(#bg)"/>
+  <rect x="0" y="0" width="1024" height="1024" rx="225" ry="225" fill="url(#sheen)"/>
+
+  <!-- magnifying glass -->
+  <circle cx="430" cy="430" r="220" fill="none" stroke="url(#glyph)" stroke-width="74" stroke-linecap="round"/>
+  <line x1="600" y1="600" x2="792" y2="792" stroke="url(#glyph)" stroke-width="86" stroke-linecap="round"/>
+
+  <!-- lightning bolt inside the lens -->
+  <path d="M 472 268 L 358 462 L 432 462 L 388 596 L 524 392 L 442 392 Z"
+        fill="#F8FAFF" stroke="#F8FAFF" stroke-width="6" stroke-linejoin="round"/>
+</svg>

@@ -1,4 +1,0 @@
-Target dependency graph (2 targets)
-Target 'AllExcludingTests' in project 'Aggregate'
-➜ Explicit dependency on target 'QuikWeb_386097E8F527BA3F_PackageProduct' in project 'QuikWeb'
-Target 'QuikWeb_386097E8F527BA3F_PackageProduct' in project 'QuikWeb' (no dependencies)

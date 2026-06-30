@@ -1,0 +1,12 @@
+# Swift Package Manager / Xcode build output
+.build/
+build/
+.swiftpm/
+DerivedData/
+*.xcodeproj
+
+# Local tooling / preview config
+.claude/
+
+# macOS
+.DS_Store
