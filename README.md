@@ -4,6 +4,8 @@ A minimal, native macOS menu-bar search launcher. Press a global shortcut from
 anywhere, type, hit Enter — QuikWeb opens the query in your default browser.
 No Dock icon, no app menu bar: everything lives behind the menu-bar icon.
 
+**Website & download: https://tommfr38.com/QuikWeb/**
+
 ## Features
 
 - **Global shortcut** (⌥Space by default, fully rebindable) summons a small
