@@ -19,7 +19,36 @@ No Dock icon, no app menu bar: everything lives behind the menu-bar icon.
   the app icon, the status-bar glyph, the settings tabs, and the status-bar
   menu items. Nothing is left blank.
 
-## Building
+## Installing (the easy way)
+
+QuikWeb has **no third-party runtime dependencies** — it uses only Apple
+system frameworks, so the only thing that needs installing is the app itself.
+Build a self-contained, double-click installer with:
+
+```sh
+Scripts/make_installer.sh
+```
+
+That produces **`build/QuikWeb-Installer.pkg`**, a universal installer (works
+on both Apple Silicon and Intel Macs). It installs QuikWeb into
+`/Applications`, clears the quarantine flag, and launches the app for you when
+it finishes.
+
+To install, double-click the `.pkg`. Because it's ad-hoc signed (no Apple
+Developer account is involved), the first time you open it macOS Gatekeeper
+may block the double-click. Either:
+
+- right-click `QuikWeb-Installer.pkg` → **Open**, then confirm; or
+- install from the terminal, which skips that prompt:
+  ```sh
+  sudo installer -pkg build/QuikWeb-Installer.pkg -target /
+  ```
+
+Building the installer itself needs the Xcode Command Line Tools (`swift`,
+`pkgbuild`, `productbuild`); `make_installer.sh` checks for them and tells you
+how to install them (`xcode-select --install`) if they're missing.
+
+## Building from source
 
 Requires Xcode (or at least the Xcode Command Line Tools) for `swift`,
 `iconutil`, and `codesign`. No other dependencies — the icon pipeline is pure
