@@ -39,7 +39,7 @@ enum AccentColor: String, CaseIterable, Identifiable, Codable, Hashable {
         case .cyan: return Color(red: 0.133, green: 0.827, blue: 0.933)
         case .violet: return Color(red: 0.545, green: 0.361, blue: 0.965)
         case .rose: return Color(red: 0.957, green: 0.255, blue: 0.475)
-        case .emerald: return Color(red: 0.063, green: 0.725, blue: 0.506)
+        case .emerald: return Color(red: 0.020, green: 0.588, blue: 0.412)
         case .orange: return Color(red: 0.976, green: 0.451, blue: 0.086)
         }
     }
