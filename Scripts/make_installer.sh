@@ -21,6 +21,7 @@ APP_BUNDLE="$BUILD_DIR/${APP_NAME}.app"
 
 STAGE_DIR="$BUILD_DIR/pkg_root"          # payload root -> maps to /Applications
 SCRIPTS_DIR="$BUILD_DIR/pkg_scripts"     # postinstall lives here
+COMPONENT_PLIST="$BUILD_DIR/component.plist"
 COMPONENT_PKG="$BUILD_DIR/${APP_NAME}-component.pkg"
 DIST_XML="$BUILD_DIR/distribution.xml"
 INSTALLER_PKG="$BUILD_DIR/${APP_NAME}-Installer.pkg"
@@ -70,12 +71,26 @@ POSTINSTALL
 chmod +x "$SCRIPTS_DIR/postinstall"
 
 # 4. Build the component package (payload + scripts -> /Applications).
+#
+#    pkgbuild defaults every bundle to BundleIsRelocatable=true, which makes
+#    `installer` ask Launch Services "where is a copy of this bundle ID
+#    already registered?" and upgrade THAT location instead of the one named
+#    in --install-location. Since QuikWeb.app gets `open`ed directly out of
+#    this very build/ directory constantly during development, Launch
+#    Services ends up with a stale registration pointing there — and a plain
+#    pkgbuild install would silently "upgrade" that dev copy instead of
+#    installing into /Applications. Forcing BundleIsRelocatable=false via a
+#    component plist makes the installer always honor --install-location.
 echo "==> Building component package"
+pkgbuild --analyze --root "$STAGE_DIR" "$COMPONENT_PLIST"
+/usr/libexec/PlistBuddy -c "Set :0:BundleIsRelocatable false" "$COMPONENT_PLIST"
+
 pkgbuild \
     --root "$STAGE_DIR" \
     --identifier "$BUNDLE_ID" \
     --version "$VERSION" \
     --install-location "/Applications" \
+    --component-plist "$COMPONENT_PLIST" \
     --scripts "$SCRIPTS_DIR" \
     "$COMPONENT_PKG"
 
@@ -111,7 +126,7 @@ productbuild \
     "$INSTALLER_PKG"
 
 # 6. Clean up intermediates.
-rm -rf "$STAGE_DIR" "$SCRIPTS_DIR" "$COMPONENT_PKG" "$DIST_XML"
+rm -rf "$STAGE_DIR" "$SCRIPTS_DIR" "$COMPONENT_PLIST" "$COMPONENT_PKG" "$DIST_XML"
 
 echo ""
 echo "==> Verifying installer"
