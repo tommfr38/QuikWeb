@@ -49,6 +49,14 @@ struct GeneralSettingsTab: View {
             }
 
             Section {
+                Toggle("Detect website addresses", isOn: $settings.websiteDetection)
+                Text("Typing just an address like \"youtube.com\" opens the website directly instead of searching for it. Queries with other words around it (\"is it safe github.com\") still search normally.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+
+            Section {
                 Toggle("Launch QuikWeb at login", isOn: $loginItemEnabled)
                     .onChange(of: loginItemEnabled) { newValue in
                         let success = LoginItemManager.setEnabled(newValue)

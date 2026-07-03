@@ -119,6 +119,15 @@ final class SearchPanel: NSPanel {
         let trimmed = query.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else { return }
         let settings = AppSettings.shared
+
+        // Website detection: a bare "name.tld" query opens the site directly;
+        // anything with surrounding words falls through to a normal search.
+        if settings.websiteDetection, let direct = WebsiteDetector.directURL(for: trimmed) {
+            NSWorkspace.shared.open(direct)
+            hide()
+            return
+        }
+
         if let url = settings.searchEngine.url(for: trimmed, customTemplate: settings.customSearchTemplate) {
             NSWorkspace.shared.open(url)
         }

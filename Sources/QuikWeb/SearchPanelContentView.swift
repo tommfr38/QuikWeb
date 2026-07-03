@@ -45,6 +45,17 @@ struct SearchPanelContentView: View {
                 onCancel: onCancel
             )
             .frame(height: 34)
+
+            // Website-detection indicator: present iff the feature is on,
+            // always neutral — never accent-colored.
+            if settings.websiteDetection {
+                Image(nsImage: IconLoader.image(named: "glyph-globe", template: true, pointSize: 20))
+                    .resizable()
+                    .renderingMode(.template)
+                    .foregroundColor(.secondary)
+                    .frame(width: 20, height: 20)
+                    .help("Web detection on")
+            }
         }
         .padding(.horizontal, 20)
         .frame(width: 600, height: 64)

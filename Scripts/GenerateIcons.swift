@@ -85,7 +85,7 @@ func run() throws {
     try writeFile(rasterize(statusBarIcon, size: 64), to: "\(outDir)/StatusBarIcon.png")
 
     print("Rasterizing UI glyphs")
-    let glyphs = ["glyph-search", "tab-general", "tab-hotkey", "tab-appearance", "tab-about", "menu-exit"]
+    let glyphs = ["glyph-search", "glyph-globe", "tab-general", "tab-hotkey", "tab-appearance", "tab-about", "menu-exit"]
     for name in glyphs {
         let svg = loadSVG("\(iconsDir)/\(name).svg")
         try writeFile(rasterize(svg, size: 128), to: "\(outDir)/\(name).png")

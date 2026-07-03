@@ -19,6 +19,9 @@ final class AppSettings: ObservableObject {
     @Published var customSearchTemplate: String {
         didSet { defaults.set(customSearchTemplate, forKey: Keys.customSearchTemplate) }
     }
+    @Published var websiteDetection: Bool {
+        didSet { defaults.set(websiteDetection, forKey: Keys.websiteDetection) }
+    }
     @Published var theme: AppTheme {
         didSet {
             defaults.set(theme.rawValue, forKey: Keys.theme)
@@ -41,6 +44,7 @@ final class AppSettings: ObservableObject {
         static let hotKey = "hotKey"
         static let searchEngine = "searchEngine"
         static let customSearchTemplate = "customSearchTemplate"
+        static let websiteDetection = "websiteDetection"
         static let theme = "theme"
         static let accentColor = "accentColor"
     }
@@ -55,6 +59,7 @@ final class AppSettings: ObservableObject {
         searchEngine = SearchEngine(rawValue: defaults.string(forKey: Keys.searchEngine) ?? "") ?? .google
         customSearchTemplate = defaults.string(forKey: Keys.customSearchTemplate)
             ?? "https://www.google.com/search?q={query}"
+        websiteDetection = defaults.object(forKey: Keys.websiteDetection) as? Bool ?? true
         theme = AppTheme(rawValue: defaults.string(forKey: Keys.theme) ?? "") ?? .dark
         accentColor = AccentColor(rawValue: defaults.string(forKey: Keys.accentColor) ?? "") ?? .indigo
     }
