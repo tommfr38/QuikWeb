@@ -1,4 +1,5 @@
 import SwiftUI
+import AppKit
 
 struct SettingsView: View {
     var body: some View {
@@ -178,6 +179,10 @@ private struct SearchPanelPreview: View {
 }
 
 struct AboutSettingsTab: View {
+    @State private var checking = false
+    @State private var statusMessage: String?
+    @State private var updateURL: URL?
+
     var body: some View {
         VStack(spacing: 12) {
             Image(nsImage: IconLoader.image(named: "AppIcon256", pointSize: 96))
@@ -192,6 +197,34 @@ struct AboutSettingsTab: View {
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: 320)
+
+            VStack(spacing: 8) {
+                Button(action: checkForUpdates) {
+                    HStack(spacing: 6) {
+                        if checking {
+                            ProgressView().controlSize(.small)
+                        }
+                        Text(checking ? "Checking…" : "Check for Updates")
+                    }
+                }
+                .disabled(checking)
+
+                if let statusMessage {
+                    Text(statusMessage)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .multilineTextAlignment(.center)
+                        .frame(maxWidth: 320)
+                }
+                if let updateURL {
+                    Button("Download Update") {
+                        NSWorkspace.shared.open(updateURL)
+                    }
+                    .buttonStyle(.borderedProminent)
+                }
+            }
+            .padding(.top, 6)
+
             Spacer()
             Button("Quit QuikWeb") {
                 NSApp.terminate(nil)
@@ -200,5 +233,23 @@ struct AboutSettingsTab: View {
         }
         .padding(.top, 28)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+
+    private func checkForUpdates() {
+        checking = true
+        statusMessage = nil
+        updateURL = nil
+        UpdateChecker.check { result in
+            checking = false
+            switch result {
+            case .upToDate(let version):
+                statusMessage = "You're on the latest version (v\(version))."
+            case .updateAvailable(let latest, let url):
+                statusMessage = "Version \(latest) is available."
+                updateURL = url
+            case .failed(let reason):
+                statusMessage = "Couldn't check for updates: \(reason)"
+            }
+        }
     }
 }

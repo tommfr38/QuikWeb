@@ -14,7 +14,7 @@ set -euo pipefail
 
 APP_NAME="QuikWeb"
 BUNDLE_ID="com.tomi.quikweb"
-VERSION="1.0.0"
+VERSION="1.2.0"
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 BUILD_DIR="$ROOT/build"
 APP_BUNDLE="$BUILD_DIR/${APP_NAME}.app"
